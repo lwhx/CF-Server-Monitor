@@ -390,6 +390,8 @@ export async function handleAdminAPI(request, env, sys, loadFullSettings = null)
           // CSP 字段格式校验：只允许 https:// 开头的域名，逗号分隔
           if (field === 'csp_static' || field === 'csp_api') {
             appearanceOptions[field] = sanitizeCspDomains(settings[field]);
+          } else if (field === 'card_chart_type') {
+            appearanceOptions[field] = settings[field] === 'ring' ? 'ring' : 'bar';
           } else {
             appearanceOptions[field] = settings[field];
           }

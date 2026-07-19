@@ -940,6 +940,290 @@ body::before {
     color: var(--color-inherit);
 }
 
+.server-card.server-card-ring {
+    --ring-card-title-size: 16px;
+    --ring-card-meta-size: 12px;
+    --ring-card-status-size: 13px;
+    --ring-card-icon-size: 20px;
+    --ring-card-percent-size: 22px;
+    --ring-card-label-size: 14px;
+    --ring-card-subtext-size: 10px;
+    --ring-card-network-label-size: 13px;
+    --ring-card-network-value-size: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 16px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.006) 30%, rgba(0, 0, 0, 0.02) 100%), var(--bg-secondary);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.server-card.server-card-ring:hover {
+    border-color: rgba(77, 166, 255, 0.8);
+}
+
+.server-card-ring-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.server-card-ring-main {
+    min-width: 0;
+    flex: 1;
+}
+
+.server-card-ring-title-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.server-card-ring-flag-wrap {
+    width: 26px;
+    flex: 0 0 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.server-card-ring-flag {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+.server-card-ring-flag-fallback {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.server-card-ring-name {
+    min-width: 0;
+    font-size: var(--ring-card-title-size);
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.server-card-ring-meta {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+    font-size: var(--ring-card-meta-size);
+}
+
+.server-card-ring-os {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-secondary);
+}
+
+.server-card-ring-os .os-icon-img {
+    width: 16px;
+    height: 16px;
+}
+
+.server-card-ring-dot {
+    color: var(--text-muted);
+}
+
+.server-card-ring-uptime {
+    color: var(--text-secondary);
+}
+
+.server-card-ring-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.server-card-ring-trend {
+    color: var(--text-muted);
+    font-size: var(--ring-card-icon-size);
+    line-height: 1;
+    transform: translateY(-2px);
+}
+
+.server-card-ring-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 68px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: var(--ring-card-status-size);
+    font-weight: 700;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.server-card-ring-divider {
+    margin: 14px 0 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.server-card-ring-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.metric-ring-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+}
+
+.metric-ring-chart {
+    position: relative;
+    width: 100%;
+    max-width: 128px;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    --ring-thickness: 5px;
+}
+
+.metric-ring-track,
+.metric-ring-progress {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+}
+
+.metric-ring-track {
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.02) 0 55%, transparent 56%), rgba(255, 255, 255, 0.02);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 0 24px rgba(0, 0, 0, 0.3);
+}
+
+.metric-ring-progress {
+    background: conic-gradient(from -90deg, var(--ring-color) 0 calc(var(--ring-value) * 1%), rgba(255, 255, 255, 0.03) 0 100%);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness) + 1px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness) + 1px));
+}
+
+.metric-ring-center {
+    position: relative;
+    z-index: 1;
+    font-size: var(--ring-card-percent-size);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+.metric-ring-label {
+    margin-top: 10px;
+    font-size: var(--ring-card-label-size);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.metric-ring-subtext {
+    margin-top: 3px;
+    min-height: 1.2em;
+    font-size: var(--ring-card-subtext-size);
+    color: var(--text-secondary);
+    text-align: center;
+}
+
+.server-card-network-panel {
+    margin-top: 22px;
+    padding: 14px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.server-card-network-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+}
+
+.server-card-network-row + .server-card-network-row {
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.server-card-network-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--ring-card-network-label-size);
+    color: var(--text-secondary);
+    min-width: 0;
+}
+
+.server-card-network-values {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    white-space: nowrap;
+    font-size: var(--ring-card-network-value-size);
+}
+
+.server-card-speed-up {
+    color: var(--accent-green);
+}
+
+.server-card-speed-down {
+    color: var(--accent-blue);
+}
+
+.server-card-total-values {
+    color: var(--text-secondary);
+}
+
+.server-card-limit-section {
+    margin-top: 8px;
+}
+
+.server-card-limit-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: var(--ring-card-network-value-size);
+    color: var(--text-secondary);
+}
+
+.server-card-limit-bar {
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+.server-card-limit-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    transition: width 0.3s ease;
+}
+
 /* --------------------------------------------------------------------------
    13. Stat Bar Components
    -------------------------------------------------------------------------- */

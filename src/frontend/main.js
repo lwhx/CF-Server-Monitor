@@ -32,6 +32,7 @@ async function fetchConfig() {
         turnstile_enabled: false,
         turnstile_login_enabled: false,
         turnstile_site_key: '',
+        card_chart_type: 'bar',
         version: '',
         last_workers_version: '',
         last_agent_version: '',
@@ -45,6 +46,7 @@ async function fetchConfig() {
         turnstile_enabled: false,
         turnstile_login_enabled: false,
         turnstile_site_key: '',
+        card_chart_type: 'bar',
         version: '',
         last_workers_version: '',
         last_agent_version: '',
@@ -62,6 +64,7 @@ async function fetchConfig() {
     const isPublic = data.is_public !== false
     const authorization = data.authorization === true
     const siteTitle = data.site_title || ''
+    const cardChartType = data.card_chart_type === 'ring' ? 'ring' : 'bar'
 
     if (version) {
       VERSION.value = version
@@ -79,7 +82,8 @@ async function fetchConfig() {
       verified,
       is_public: isPublic,
       authorization,
-      site_title: siteTitle
+      site_title: siteTitle,
+      card_chart_type: cardChartType
     }
   } catch (e) {
     console.error('Failed to fetch config:', e)
@@ -88,6 +92,7 @@ async function fetchConfig() {
     turnstile_enabled: false,
     turnstile_login_enabled: false,
     turnstile_site_key: '',
+    card_chart_type: 'bar',
     version: '',
     last_workers_version: '',
     last_agent_version: '',
@@ -231,8 +236,9 @@ async function initApp() {
         verified: sharedTurnstileSite ? enabledTurnstileSites.every(site => site.verified) : first.data.verified === true,
         is_public: !privateAccess.hasPrivateSite,
         authorization: !privateAccess.hasUnauthorizedPrivateSite,
-        site_title: first.data.site_title || ''
-      } : { turnstile_enabled: false, turnstile_login_enabled: false, turnstile_site_key: '', turnstile_api_index: 0, version: '', last_workers_version: '', last_agent_version: '', verified: false, is_public: true, authorization: false, site_title: '' }
+        site_title: first.data.site_title || '',
+        card_chart_type: first.data.card_chart_type === 'ring' ? 'ring' : 'bar'
+      } : { turnstile_enabled: false, turnstile_login_enabled: false, turnstile_site_key: '', turnstile_api_index: 0, version: '', last_workers_version: '', last_agent_version: '', verified: false, is_public: true, authorization: false, site_title: '', card_chart_type: 'bar' }
       if (sharedTurnstileSite) {
         config.turnstile_enabled = true
         config.turnstile_site_key = sharedTurnstileSite.siteKey

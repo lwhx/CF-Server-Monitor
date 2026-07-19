@@ -237,6 +237,7 @@ const sysConfig = ref({
   show_expire: true,
   show_tf: true,
   show_time: true,
+  card_chart_type: 'bar',
   site_title: DEFAULT_SITE_TITLE
 })
 const regionStats = ref({})
@@ -554,21 +555,12 @@ const mergeServersIntoList = (rawServers) => {
 const loadDashboardConfig = async () => {
   try {
     const localTitle = String(getTitle() || '').trim()
-    if (hasMultipleApiBases() && localTitle) {
-      sysConfig.value = {
-        ...sysConfig.value,
-        site_title: localTitle
-      }
-      return
-    }
-
     const config = appConfig || await fetchConfig()
     const siteTitle = String(config?.site_title || '').trim()
-    if (siteTitle) {
-      sysConfig.value = {
-        ...sysConfig.value,
-        site_title: siteTitle
-      }
+    sysConfig.value = {
+      ...sysConfig.value,
+      site_title: hasMultipleApiBases() && localTitle ? localTitle : (siteTitle || sysConfig.value.site_title),
+      card_chart_type: config?.card_chart_type === 'ring' ? 'ring' : 'bar'
     }
   } catch (e) {
     console.log('[INFO] Dashboard config pending...', e)
@@ -597,6 +589,7 @@ const refreshData = async () => {
           show_expire: data.sysConfig?.show_expire ?? true,
           show_tf: data.sysConfig?.show_tf ?? true,
           show_time: data.sysConfig?.show_time ?? true,
+          card_chart_type: data.sysConfig?.card_chart_type === 'ring' ? 'ring' : 'bar',
           site_title: sysConfig.value.site_title || DEFAULT_SITE_TITLE
         }
 
@@ -630,6 +623,7 @@ const refreshData = async () => {
       show_expire: data.sysConfig?.show_expire ?? true,
       show_tf: data.sysConfig?.show_tf ?? true,
       show_time: data.sysConfig?.show_time ?? true,
+      card_chart_type: data.sysConfig?.card_chart_type === 'ring' ? 'ring' : 'bar',
       site_title: sysConfig.value.site_title || DEFAULT_SITE_TITLE
     }
 

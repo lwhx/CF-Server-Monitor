@@ -271,6 +271,7 @@ const createEmptyMergedData = () => ({
     show_expire: true,
     show_tf: true,
     show_time: true,
+    card_chart_type: 'bar',
     site_title: DEFAULT_SITE_TITLE
   }
 })
@@ -308,6 +309,7 @@ const mergeSiteResult = (mergedData, { data, error, baseUrl }, multiSite, localT
       show_expire: data.sysConfig.show_expire ?? mergedData.sysConfig.show_expire,
       show_tf: data.sysConfig.show_tf ?? mergedData.sysConfig.show_tf,
       show_time: data.sysConfig.show_time ?? mergedData.sysConfig.show_time,
+      card_chart_type: data.sysConfig.card_chart_type ?? mergedData.sysConfig.card_chart_type,
       site_title: multiSite ? localTitle : mergedData.sysConfig.site_title
     }
   }

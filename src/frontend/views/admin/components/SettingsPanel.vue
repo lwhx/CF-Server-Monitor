@@ -25,6 +25,17 @@
 
         <div class="form-row">
           <div class="form-group flex-1">
+            <label class="form-label">{{ trans.cardChartType }}</label>
+            <select v-model="settings.card_chart_type" class="form-select">
+              <option value="bar">{{ trans.cardChartBar }}</option>
+              <option value="ring">{{ trans.cardChartRing }}</option>
+            </select>
+            <p class="text-muted text-sm mt-1">{{ trans.cardChartTypeTip }}</p>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
             <label class="form-label">{{ trans.customHead }}</label>
             <textarea v-model="settings.custom_head" class="form-textarea" rows="3" placeholder="<link rel='stylesheet' href='...'">
             </textarea>
