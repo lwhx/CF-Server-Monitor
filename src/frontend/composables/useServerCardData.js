@@ -72,10 +72,10 @@ export function useServerCardData(props) {
   })
 
   const trafficUsagePercent = computed(() => trafficLimitSummary.value ? trafficLimitSummary.value.percent : 0)
-  const trafficUsagePercentText = computed(() => trafficUsagePercent.value.toFixed(1))
+  const trafficUsagePercentText = computed(() => trafficUsagePercent.value.toFixed(2))
   const trafficLimitPercentText = computed(() => {
-    if (!trafficLimitSummary.value) return '0.000'
-    return trafficUsagePercent.value < 0.1 ? trafficUsagePercent.value.toFixed(3) : trafficUsagePercent.value.toFixed(1)
+    if (!trafficLimitSummary.value) return '0.0'
+    return trafficUsagePercent.value.toFixed(1)
   })
   const trafficLimitText = computed(() => {
     if (!trafficLimitSummary.value) return ''
@@ -93,6 +93,13 @@ export function useServerCardData(props) {
   const netOutSpeed = computed(() => formatBytes(props.server.net_out_speed))
   const totalRx = computed(() => formatBytes(props.server.net_rx))
   const totalTx = computed(() => formatBytes(props.server.net_tx))
+
+  const loadAvg = computed(() => {
+    const raw = String(props.server.load_avg || '').trim()
+    if (!raw) return [0, 0, 0]
+    const parts = raw.split(/\s+/)
+    return [parseFloat(parts[0]) || 0, parseFloat(parts[1]) || 0, parseFloat(parts[2]) || 0]
+  })
 
   const formatUptime = (bootTime, nowTs = Date.now()) => {
     if (!bootTime) return 'N/A'
@@ -217,6 +224,7 @@ export function useServerCardData(props) {
     netOutSpeed,
     totalRx,
     totalTx,
+    loadAvg,
     uptimeText,
     ramUsageText,
     diskUsageText,

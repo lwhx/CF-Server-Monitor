@@ -72,6 +72,14 @@
         </span>
       </div>
       <div class="server-card-network-row">
+        <span class="server-card-network-label">{{ trans.loadAvg }}</span>
+        <span class="server-card-network-values">
+          <span>{{ loadAvg[0].toFixed(2) }}</span>
+          <span>{{ loadAvg[1].toFixed(2) }}</span>
+          <span>{{ loadAvg[2].toFixed(2) }}</span>
+        </span>
+      </div>
+      <div class="server-card-network-row">
         <span class="server-card-network-label">{{ trans.totalTraffic }}</span>
         <span class="server-card-network-values server-card-total-values">
           <span>↑ {{ totalTx }}</span>
@@ -131,6 +139,7 @@ const {
   netOutSpeed,
   totalRx,
   totalTx,
+  loadAvg,
   ramUsageText,
   diskUsageText,
   getRingStyle,

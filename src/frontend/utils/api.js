@@ -215,7 +215,7 @@ export const formatBytes = (bytes) => {
   const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
   const i = Math.floor(Math.log(bytes) / Math.log(k))
   const safeIndex = Math.max(0, Math.min(i, sizes.length - 1))
-  return parseFloat((bytes / Math.pow(k, safeIndex)).toFixed(2)) + ' ' + sizes[safeIndex]
+  return parseFloat((bytes / Math.pow(k, safeIndex)).toFixed(0)) + ' ' + sizes[safeIndex]
 }
 
 export const getTrafficUsagePercent = (server) => {

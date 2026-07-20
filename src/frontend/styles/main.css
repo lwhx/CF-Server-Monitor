@@ -1164,6 +1164,7 @@ body::before {
     justify-content: flex-end;
     white-space: nowrap;
     font-size: var(--ring-card-network-value-size);
+    color: var(--text-secondary);
 }
 
 .server-card-speed-up {

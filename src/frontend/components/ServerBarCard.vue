@@ -34,7 +34,7 @@
         <div class="stat-bar-container">
           <div class="stat-bar-fill" :style="{ width: cpuPercent + '%', background: 'var(--accent-cyan)' }"></div>
         </div>
-        <span class="stat-value">{{ cpuPercent.toFixed(1) }}%</span>
+        <span class="stat-value">{{ cpuPercent.toFixed(2) }}%</span>
       </div>
       <div class="stat-row">
         <span class="stat-key">RAM</span>
@@ -56,6 +56,12 @@
           <div class="stat-bar-fill" :style="{ width: Math.min(100, trafficUsagePercent) + '%', background: 'var(--accent-blue)' }"></div>
         </div>
         <span class="stat-value">{{ trafficUsagePercentText }}%</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-key">LOAD</span>
+        <span class="net-down">{{ loadAvg[0].toFixed(2) }}</span>
+        <span>{{ loadAvg[1].toFixed(2) }}</span>
+        <span class="net-up">{{ loadAvg[2].toFixed(2) }}</span>
       </div>
       <div class="stat-row">
         <span class="stat-key">NET</span>
@@ -129,6 +135,7 @@ const {
   netOutSpeed,
   totalRx,
   totalTx,
+  loadAvg,
   dataTimeText,
   isExpired,
   expireText,
