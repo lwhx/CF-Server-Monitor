@@ -1,27 +1,31 @@
 <template>
   <router-link :to="to" class="server-card server-card-ring" :data-region="regionCode">
     <div class="server-card-ring-header">
-      <div class="server-card-ring-main">
-        <div class="server-card-ring-title-row">
-          <span v-if="regionCode && regionCode !== 'xx'" class="server-card-ring-flag-wrap">
-            <img class="flag-img server-card-ring-flag" :src="getPublicAssetUrl('flags/' + regionCode + '.svg')" :alt="regionCode">
+      <div class="server-card-header">
+        <div class="server-identity">
+          <span v-if="regionCode && regionCode !== 'xx'" class="country-os-icons">
+            <img class="flag-img" :src="getPublicAssetUrl('flags/' + regionCode + '.svg')" :alt="regionCode">
           </span>
-          <span v-else class="server-card-ring-flag-wrap">
-            <span class="flag-fallback server-card-ring-flag-fallback">🏳️</span>
+          <span v-else class="country-os-icons">
+            <span class="flag-fallback">🏳️</span>
           </span>
-          <span class="server-card-ring-name">{{ server.name }}</span>
+          <span class="server-name">{{ server.name }}</span>
         </div>
-        <div class="server-card-ring-meta">
-          <span class="server-card-ring-os">
-            <OsIcon :os="server.os" />
-            <span>{{ osName }}</span>
-          </span>
-          <span class="server-card-ring-dot">•</span>
-          <span class="server-card-ring-uptime">{{ uptimeText }}</span>
-        </div>
-      </div>
-      <div class="server-card-ring-actions">
         <span class="status-label" :style="{ color: statusColor, borderColor: statusColor }">{{ statusText }}</span>
+      </div>
+      <div class="server-meta">
+        <div class="card-meta">
+          <div v-if="sysConfig.show_price && server.price" class="card-meta-item">💰 {{ server.price }}</div>
+          <div v-if="sysConfig.show_expire && server.expire_date" class="card-meta-item">📅 <span :class="{ 'expired': isExpired }">{{ expireText }}</span></div>
+        </div>
+        <div class="card-badges">
+          <span v-for="(tag, index) in tagList" :key="tag" :class="['badge', 'badge-tag', tagColorClass(index)]">{{ tag }}</span>
+          <span v-if="server.ip_v4 === '1' && server.ip_v6 === '1'" class="badge badge badge-v4-v6">IPv4/6</span>
+          <template v-else>
+            <span v-if="server.ip_v4 === '1'" class="badge badge-v4">IPv4</span>
+            <span v-if="server.ip_v6 === '1'" class="badge badge-v6">IPv6</span>
+          </template>
+        </div>
       </div>
     </div>
 
@@ -94,9 +98,6 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import OsIcon from './OsIcon.vue'
-import { getOSName } from '../utils/osIcon'
 import { DEFAULT_SERVER_CARD_CONFIG, useServerCardData } from '../composables/useServerCardData'
 
 const props = defineProps({
@@ -130,7 +131,6 @@ const {
   netOutSpeed,
   totalRx,
   totalTx,
-  uptimeText,
   ramUsageText,
   diskUsageText,
   getRingStyle,
@@ -138,8 +138,10 @@ const {
   isPingValid,
   getPingColor,
   pingList,
-  getPublicAssetUrl
+  getPublicAssetUrl,
+  tagList,
+  tagColorClass,
+  isExpired,
+  expireText
 } = useServerCardData(props)
-
-const osName = computed(() => getOSName(props.server.os))
 </script>

@@ -91,8 +91,8 @@ export function useServerCardData(props) {
 
   const netInSpeed = computed(() => formatBytes(props.server.net_in_speed))
   const netOutSpeed = computed(() => formatBytes(props.server.net_out_speed))
-  const totalRx = computed(() => formatBytes(props.server.net_rx_monthly))
-  const totalTx = computed(() => formatBytes(props.server.net_tx_monthly))
+  const totalRx = computed(() => formatBytes(props.server.net_rx))
+  const totalTx = computed(() => formatBytes(props.server.net_tx))
 
   const formatUptime = (bootTime, nowTs = Date.now()) => {
     if (!bootTime) return 'N/A'
