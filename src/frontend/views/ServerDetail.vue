@@ -538,9 +538,12 @@ const syncProbeChartVisibility = () => {
       if (!dataset) continue
       const disabled = isDisabledProbeMetric(server.value[item.field])
       dataset.disabledProbe = disabled
-      dataset.hidden = disabled
-      if (typeof chart.setDatasetVisibility === 'function') {
-        chart.setDatasetVisibility(item.datasetIndex, !disabled)
+      // Only force hide if disabled by config; otherwise preserve user's legend toggle
+      if (disabled) {
+        dataset.hidden = true
+        if (typeof chart.setDatasetVisibility === 'function') {
+          chart.setDatasetVisibility(item.datasetIndex, false)
+        }
       }
     }
     chart.update('none')
